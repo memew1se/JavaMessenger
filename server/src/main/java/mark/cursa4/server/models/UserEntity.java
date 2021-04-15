@@ -1,4 +1,4 @@
-package mark.cursa4.server.model;
+package mark.cursa4.server.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
