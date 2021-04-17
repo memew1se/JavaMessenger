@@ -1,5 +1,9 @@
 package mark.cursa4.server.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
@@ -8,8 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 
 @Entity
+@Data
+@NoArgsConstructor
+@ToString
 @Table(name = "Users")
-public class UserEntity {
+public class UserEntity extends BaseEntity{
 
     @Id @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +31,4 @@ public class UserEntity {
     @Column(name = "secret_key")
     private String secret_key;
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", nickname='" + nickname + '\'' +
-                ", password='" + password + '\'' +
-                ", secret_key='" + secret_key + '\'' +
-                '}';
-    }
 }

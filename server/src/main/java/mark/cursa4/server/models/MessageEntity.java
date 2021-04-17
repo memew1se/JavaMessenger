@@ -1,5 +1,9 @@
 package mark.cursa4.server.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
@@ -10,8 +14,11 @@ import javax.persistence.Column;
 import java.sql.Timestamp;
 
 @Entity
+@Data
+@NoArgsConstructor
+@ToString
 @Table(name = "Messages")
-public class MessageEntity {
+public class MessageEntity extends BaseEntity{
 
     @Id @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,14 +36,4 @@ public class MessageEntity {
     @Column(name = "timestamp")
     private Timestamp timestamp;
 
-    @Override
-    public String toString() {
-        return "MessageEntity{" +
-                "id=" + id +
-                ", user_id=" + user_id +
-                ", chat_id=" + chat_id +
-                ", content='" + content + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
-    }
 }
