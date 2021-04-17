@@ -13,17 +13,19 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 @Table(name = "Participants")
-public class ParticipantEntity extends BaseEntity implements Serializable{
+public class ParticipantEntity  {
 
+    @EmbeddedId
+    private ParticipantEntityId id;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "chat_id")
+    @MapsId("chat_id")
+    @ManyToOne(targetEntity = ChatEntity.class)
+    @JoinColumn(name = "chat_id", referencedColumnName = "id")
     private ChatEntity chat;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @MapsId("user_id")
+    @ManyToOne(targetEntity = UserEntity.class)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
 
 }

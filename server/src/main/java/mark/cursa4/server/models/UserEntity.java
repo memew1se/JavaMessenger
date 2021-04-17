@@ -23,7 +23,4 @@ public class UserEntity extends BaseEntity{
     @Column(name = "password")
     private String password;
 
-    @Column(name = "secret_key")
-    private String secret_key;
-
 }
