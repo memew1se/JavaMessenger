@@ -4,12 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Column;
+import javax.persistence.*;
 
 import java.io.Serializable;
 
@@ -20,12 +15,15 @@ import java.io.Serializable;
 @Table(name = "Participants")
 public class ParticipantEntity extends BaseEntity implements Serializable{
 
-    @Id @Column(name = "chat_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int chat_id;
 
-    @Id @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int user_id;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "chat_id")
+    private ChatEntity chat;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
 }
