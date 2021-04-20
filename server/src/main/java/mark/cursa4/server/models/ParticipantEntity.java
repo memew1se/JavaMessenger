@@ -3,6 +3,7 @@ package mark.cursa4.server.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 

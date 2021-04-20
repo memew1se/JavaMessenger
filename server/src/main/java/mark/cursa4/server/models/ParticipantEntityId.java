@@ -15,10 +15,10 @@ import java.io.Serializable;
 @Embeddable
 public class ParticipantEntityId implements Serializable {
 
-    private int chat_id;
-    private int user_id;
+    private long chat_id;
+    private long user_id;
 
-    public ParticipantEntityId(int chat_id, int user_id) {
+    public ParticipantEntityId(long chat_id, long user_id) {
         this.chat_id = chat_id;
         this.user_id = user_id;
     }

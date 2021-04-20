@@ -17,10 +17,6 @@ import java.util.Calendar;
 @ToString
 public class BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     @CreationTimestamp
     private Calendar creationTime;
 
