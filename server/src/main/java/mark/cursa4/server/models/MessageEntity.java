@@ -29,7 +29,7 @@ public class MessageEntity extends BaseEntity{
     @JoinColumn(name = "chat_id")
     private ChatEntity chat;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
 
     @Column(name = "timestamp")

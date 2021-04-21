@@ -6,6 +6,8 @@ import lombok.ToString;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -13,10 +15,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Table(name = "Chats")
-public class ChatEntity extends BaseEntity{
+public class ChatEntity extends BaseEntity implements Serializable {
 
     @Id @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @ElementCollection
+    @Column(name = "users", nullable = false)
+    private List<Long> users;
 
 }
