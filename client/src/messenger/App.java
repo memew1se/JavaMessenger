@@ -16,9 +16,7 @@ public class App extends Application {
         primaryStage.setTitle("JavaMessenger");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
     }
-
 
     public static void main(String[] args) {
         launch(args);
