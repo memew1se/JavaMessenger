@@ -12,9 +12,12 @@ import kong.unirest.HttpResponse;
 import kong.unirest.UnirestException;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
+import messenger.exceptions.NonUniqueNickname;
+import messenger.requests.BaseController;
+import messenger.requests.ClientRequests;
 
 
-public class LoginController {
+public class LoginController extends BaseController {
 
     @FXML
     private Label errorLabel;
@@ -32,7 +35,7 @@ public class LoginController {
     private Button signUpButton;
 
     @FXML
-    public void signInButtonHandler() {
+    public void signInButtonHandler() throws UnirestException {
         String nick = nickField.getText();
         String password = passField.getText();
 
@@ -42,12 +45,8 @@ public class LoginController {
         }
 
         try {
-            HttpResponse<JsonNode> response = Unirest.get("http://127.0.0.1:8080/userEntities/search/nickpass")
-                    .queryString("nickname", nick)
-                    .queryString("password", password)
-                    .asJson();
-
-            JSONArray user = response.getBody().getObject().getJSONObject("_embedded").getJSONArray("userEntities");
+            ClientRequests cr = new ClientRequests(nick, password);
+            JSONArray user = cr.signIn();
 
             if (user.isEmpty()) {
                 errorLabel.setText("Couldn't find your account");
@@ -61,7 +60,7 @@ public class LoginController {
     }
 
     @FXML
-    public void signUpButtonHandler() {
+    public void signUpButtonHandler() throws UnirestException, NonUniqueNickname {
         String nick = nickField.getText();
         String password = passField.getText();
 
@@ -71,20 +70,14 @@ public class LoginController {
         }
 
         try {
-            JSONObject body = new JSONObject();
-
-            body.put("nickname", nick);
-            body.put("password", password);
-
-            HttpResponse<JsonNode> response = Unirest.post("http://127.0.0.1:8080/userEntities")
-                    .header("accept", "application/json")
-                    .header("Content-Type", "application/json")
-                    .body(body)
-                    .asJson();
+            ClientRequests cr = new ClientRequests(nick, password);
+            cr.signUp();
 
         } catch (UnirestException ue) {
             errorLabel.setText("Server is not responding! Please try later or check your internet connection");
             return;
+        } catch (NonUniqueNickname nn) {
+            errorLabel.setText(nn.getMessage());
         }
     }
 
