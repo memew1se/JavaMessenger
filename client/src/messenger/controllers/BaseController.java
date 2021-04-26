@@ -1,4 +1,4 @@
-package messenger.requests;
+package messenger.controllers;
 
 import messenger.App;
 

@@ -6,6 +6,7 @@ import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
+
 import messenger.exceptions.NonUniqueNickname;
 
 public class ClientRequests {

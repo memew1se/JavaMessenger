@@ -6,15 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
-import kong.unirest.HttpResponse;
 import kong.unirest.UnirestException;
 import kong.unirest.json.JSONArray;
-import kong.unirest.json.JSONObject;
+
 import messenger.exceptions.NonUniqueNickname;
-import messenger.requests.BaseController;
 import messenger.requests.ClientRequests;
+import messenger.utils.PasswordAuth;
 
 
 public class LoginController extends BaseController {
@@ -44,6 +41,8 @@ public class LoginController extends BaseController {
             return;
         }
 
+        password = PasswordAuth.hashPassword(password);
+
         try {
             ClientRequests cr = new ClientRequests(nick, password);
             JSONArray user = cr.signIn();
@@ -68,6 +67,8 @@ public class LoginController extends BaseController {
             errorLabel.setText("Input nickname and password!");
             return;
         }
+
+        password = PasswordAuth.hashPassword(password);
 
         try {
             ClientRequests cr = new ClientRequests(nick, password);
