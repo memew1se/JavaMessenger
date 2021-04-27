@@ -25,6 +25,10 @@ public class ClientRequests {
         unirest.config().defaultBaseUrl(System.getenv("BASE_URL"));
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public JSONArray signIn() throws UnirestException {
         HttpResponse<JsonNode> response = unirest.get("/userEntities/search/nickpass")
                 .queryString("nickname", this.nickname)

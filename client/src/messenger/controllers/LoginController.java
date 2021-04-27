@@ -9,11 +9,10 @@ import javafx.scene.control.PasswordField;
 import kong.unirest.UnirestException;
 import kong.unirest.json.JSONArray;
 
-import messenger.entities.User;
 import messenger.exceptions.NonUniqueNickname;
 import messenger.requests.ClientRequests;
+import messenger.utils.IdConverter;
 import messenger.utils.PasswordAuth;
-import messenger.utils.UserConverter;
 
 
 public class LoginController extends BaseController {
@@ -54,8 +53,9 @@ public class LoginController extends BaseController {
                 return;
             }
 
-            User user = UserConverter.convert(jsonUser);
-            this.application.setUser(user);
+            long user_id = IdConverter.convert(jsonUser);
+            cr.setId(user_id);
+            this.application.setCr(cr);
 
             this.application.Chat();
 
@@ -81,8 +81,11 @@ public class LoginController extends BaseController {
             ClientRequests cr = new ClientRequests(nick, password);
             JSONArray jsonUser = cr.signUp();
 
-            User user = UserConverter.convert(jsonUser);
-            this.application.setUser(user);
+            long user_id = IdConverter.convert(jsonUser);
+            cr.setId(user_id);
+            this.application.setCr(cr);
+
+            this.application.Chat();
 
         } catch (UnirestException ue) {
             errorLabel.setText("Server is not responding! Please try later or check your internet connection");

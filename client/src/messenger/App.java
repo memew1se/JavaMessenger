@@ -6,14 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import messenger.controllers.LoginController;
-import messenger.entities.User;
+import messenger.requests.ClientRequests;
 
 import java.io.IOException;
 
 public class App extends Application {
 
     private Stage primaryStage;
-    private User user;
+    private ClientRequests cr;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -53,7 +53,7 @@ public class App extends Application {
         }
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCr(ClientRequests cr) {
+        this.cr = cr;
     }
 }
