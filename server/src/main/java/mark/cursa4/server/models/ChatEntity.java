@@ -21,6 +21,9 @@ public class ChatEntity extends BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @ElementCollection
     @Column(name = "users", nullable = false)
     private List<Long> users;

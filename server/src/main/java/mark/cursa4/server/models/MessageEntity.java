@@ -25,14 +25,14 @@ public class MessageEntity extends BaseEntity{
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @JoinColumn(name = "from")
+    private String nickname;
+
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private ChatEntity chat;
 
     @Column(name = "content", nullable = false)
     private String content;
-
-    @Column(name = "timestamp")
-    private Timestamp timestamp;
 
 }
