@@ -9,20 +9,20 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView prefHeight="538.0" prefWidth="216.0">
+      <TableView fx:id="chatTableView" prefHeight="538.0" prefWidth="216.0">
          <columns>
-            <TableColumn prefWidth="215.0" text="Chats" />
+            <TableColumn fx:id="chatTableColumn" prefWidth="215.0" text="Chats" />
          </columns>
       </TableView>
-      <TableView layoutX="216.0" prefHeight="538.0" prefWidth="584.0">
+      <TableView fx:id="messengerTableView" layoutX="216.0" prefHeight="538.0" prefWidth="584.0">
         <columns>
-          <TableColumn prefWidth="166.0" text="User" />
-          <TableColumn minWidth="0.0" prefWidth="419.0" text="Message" />
+          <TableColumn fx:id="userTableColumn" prefWidth="166.0" text="User" />
+          <TableColumn fx:id="messageTableColumn" minWidth="0.0" prefWidth="419.0" text="Message" />
         </columns>
       </TableView>
-      <Button layoutX="69.0" layoutY="556.0" mnemonicParsing="false" text="New chat" />
+      <Button fx:id="newChatButton" layoutX="69.0" layoutY="556.0" mnemonicParsing="false" text="New chat" />
       <Line endX="21.0" endY="-568.0" layoutX="195.0" layoutY="568.0" startX="21.0" startY="35.0" />
-      <Button layoutX="654.0" layoutY="556.0" mnemonicParsing="false" text="Send message" />
-      <TextField layoutX="235.0" layoutY="556.0" prefHeight="24.0" prefWidth="393.0" promptText="Write your message..." />
+      <Button fx:id="sendMessageButton" layoutX="654.0" layoutY="556.0" mnemonicParsing="false" text="Send message" />
+      <TextField fx:id="contentTextField" layoutX="235.0" layoutY="556.0" prefHeight="24.0" prefWidth="393.0" promptText="Write your message..." />
    </children>
 </AnchorPane>

@@ -21,10 +21,10 @@ public class LoginController extends BaseController {
     private Label errorLabel;
 
     @FXML
-    private TextField nickField;
+    private TextField nickTextField;
 
     @FXML
-    private PasswordField passField;
+    private PasswordField passTextField;
 
     @FXML
     private Button signInButton;
@@ -34,8 +34,8 @@ public class LoginController extends BaseController {
 
     @FXML
     public void signInButtonHandler() throws UnirestException {
-        String nick = nickField.getText();
-        String password = passField.getText();
+        String nick = nickTextField.getText();
+        String password = passTextField.getText();
 
         if (nick.isEmpty() | password.isEmpty()) {
             errorLabel.setText("Input nickname and password!");
@@ -67,8 +67,8 @@ public class LoginController extends BaseController {
 
     @FXML
     public void signUpButtonHandler() throws UnirestException, NonUniqueNickname {
-        String nick = nickField.getText();
-        String password = passField.getText();
+        String nick = nickTextField.getText();
+        String password = passTextField.getText();
 
         if (nick.isEmpty() | password.isEmpty()) {
             errorLabel.setText("Input nickname and password!");
