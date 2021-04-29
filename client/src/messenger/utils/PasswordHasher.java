@@ -6,7 +6,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public class PasswordAuth {
+public class PasswordHasher {
 
     private static final byte[] SALT = System.getenv("MESSENGER_SALT").getBytes();
     private static final int ITERATIONS = 20_000;

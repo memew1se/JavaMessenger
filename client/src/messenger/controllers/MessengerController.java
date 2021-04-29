@@ -1,19 +1,17 @@
 package messenger.controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
 import messenger.App;
 import messenger.entities.Chat;
 import messenger.entities.Message;
 import messenger.requests.ClientRequests;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MessengerController {
 
@@ -45,9 +43,18 @@ public class MessengerController {
     private ClientRequests messengerRequests;
     private ObservableList<Chat> allChats;
 
-    public void settings(App application) {
+    public void configure(App application) {
         this.application = application;
         messengerRequests = application.getClientRequests();
+
+        chatTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Chat>() {
+            @Override
+            public void changed(ObservableValue<? extends Chat> observable, Chat oldValue, Chat newValue) {
+                if(chatTableView.getSelectionModel().getSelectedItem() != null) {
+                    showMessages(newValue.getId());
+                }
+            }
+        });
 
         allChats = FXCollections.observableArrayList();
         allChats = messengerRequests.getChats();
@@ -55,6 +62,9 @@ public class MessengerController {
         chatTableView.setItems(allChats);
 
         chatTableColumn.setCellValueFactory(cell -> cell.getValue().getNameProperty());
+    }
+
+    public void showMessages(long chat_id) {
 
     }
 

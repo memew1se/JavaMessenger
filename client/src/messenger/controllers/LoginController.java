@@ -7,13 +7,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
 import kong.unirest.UnirestException;
-import kong.unirest.json.JSONArray;
 
 import kong.unirest.json.JSONObject;
 import messenger.exceptions.NonUniqueNickname;
 import messenger.requests.ClientRequests;
 import messenger.utils.IdConverter;
-import messenger.utils.PasswordAuth;
+import messenger.utils.PasswordHasher;
 
 
 public class LoginController extends BaseController {
@@ -43,7 +42,7 @@ public class LoginController extends BaseController {
             return;
         }
 
-        password = PasswordAuth.hashPassword(password);
+        password = PasswordHasher.hashPassword(password);
 
         try {
             ClientRequests loginRequests = new ClientRequests(nick, password);
@@ -76,7 +75,7 @@ public class LoginController extends BaseController {
             return;
         }
 
-        password = PasswordAuth.hashPassword(password);
+        password = PasswordHasher.hashPassword(password);
 
         try {
             ClientRequests loginRequests = new ClientRequests(nick, password);

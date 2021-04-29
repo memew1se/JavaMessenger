@@ -51,7 +51,7 @@ public class App extends Application {
             primaryStage.setScene(new Scene(messengerForm));
 
             MessengerController mc = loader.getController();
-            mc.settings(this);
+            mc.configure(this);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -22,6 +22,10 @@ public class Chat {
         this.users_id = new SimpleListProperty<Long>(userList);
     }
 
+    public long getId() {
+        return id.get();
+    }
+
     public StringProperty getNameProperty() {
         return name;
     }
