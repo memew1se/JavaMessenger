@@ -53,7 +53,7 @@ public class LoginController extends BaseController {
                 return;
             }
 
-            long user_id = IdConverter.convert(jsonUser);
+            long user_id = IdConverter.convertIdToLong(jsonUser);
             loginRequests.setId(user_id);
             this.application.setClientRequests(loginRequests);
 
@@ -81,7 +81,7 @@ public class LoginController extends BaseController {
             ClientRequests loginRequests = new ClientRequests(nick, password);
             JSONObject jsonUser = loginRequests.signUp();
 
-            long user_id = IdConverter.convert(jsonUser);
+            long user_id = IdConverter.convertIdToLong(jsonUser);
             loginRequests.setId(user_id);
             this.application.setClientRequests(loginRequests);
 

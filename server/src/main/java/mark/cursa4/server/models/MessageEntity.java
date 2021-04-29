@@ -21,12 +21,12 @@ public class MessageEntity extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity fromId;
 
     @JoinColumn(name = "from")
-    private String nickname;
+    private String fromName;
 
     @ManyToOne
     @JoinColumn(name = "chat_id")

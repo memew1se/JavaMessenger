@@ -42,6 +42,7 @@ public class MessengerController extends BaseController {
     private ClientRequests messengerRequests;
     private ObservableList<Chat> allChats;
     private ObservableList<Message> allMessages;
+    private long currentChat;
 
     public void configure(App application) {
         setApplication(application);
@@ -51,21 +52,35 @@ public class MessengerController extends BaseController {
             @Override
             public void changed(ObservableValue<? extends Chat> observable, Chat oldValue, Chat newValue) {
                 if(chatTableView.getSelectionModel().getSelectedItem() != null) {
-                    showMessages(newValue.getId());
+                    setCurrentChat(newValue.getId());
+                    showMessages();
                 }
             }
         });
+
+        allMessages = FXCollections.observableArrayList();
 
         allChats = FXCollections.observableArrayList();
         allChats = messengerRequests.getChats();
 
         chatTableView.setItems(allChats);
 
+        messageTableView.setItems(allMessages);
+
         chatTableColumn.setCellValueFactory(cell -> cell.getValue().getNameProperty());
+
+        userTableColumn.setCellValueFactory(cell -> cell.getValue().getFromNicknameProperty());
+        messageTableColumn.setCellValueFactory(cell -> cell.getValue().getContentProperty());
     }
 
-    public void showMessages(long chat_id) {
+    public void showMessages() {
 
+        allMessages.clear();
+        allMessages.addAll(application.getClientRequests().getMessages(currentChat));
+    }
+
+    public void setCurrentChat(long currentChat) {
+        this.currentChat = currentChat;
     }
 
 }

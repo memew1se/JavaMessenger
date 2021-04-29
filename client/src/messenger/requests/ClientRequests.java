@@ -10,10 +10,10 @@ import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 
 import messenger.entities.Chat;
+import messenger.entities.Message;
 import messenger.exceptions.NonUniqueNickname;
 import messenger.utils.IdConverter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRequests {
@@ -70,14 +70,15 @@ public class ClientRequests {
                 .queryString("id", id)
                 .asJson();
 
-        JSONArray chats = response.getBody().getObject().getJSONObject("_embedded").getJSONArray("chatEntities");
+        JSONArray chats = response.getBody().getObject()
+                .getJSONObject("_embedded").getJSONArray("chatEntities");
 
         ObservableList<Chat> chatList = FXCollections.observableArrayList();
 
         for(int i = 0; i < chats.length(); i++) {
             JSONObject chat = chats.getJSONObject(i);
 
-            long id = IdConverter.convert(chat);
+            long id = IdConverter.convertIdToLong(chat);
             String name = chat.getString("name");
             List<Long> users_id = chat.getJSONArray("users").toList();
 
@@ -87,4 +88,36 @@ public class ClientRequests {
         
         return chatList;
     }
+
+    public ObservableList<Message> getMessages(long chatId) {
+        HttpResponse<JsonNode> response = unirest.get("/messageEntities/search/chatid")
+                .queryString("id", IdConverter.convertChatIdToHref(chatId))
+                .asJson();
+
+        JSONArray messages = response.getBody().getObject()
+                .getJSONObject("_embedded").getJSONArray("messageEntities");
+
+        ObservableList<Message> messageList = FXCollections.observableArrayList();
+
+        for(int i = 0; i < messages.length(); i++) {
+            JSONObject message = messages.getJSONObject(i);
+
+            long id = IdConverter.convertIdToLong(message);
+            long fromUserId = getId(message.getJSONObject("_links").getJSONObject("fromId").getString("href"));
+            String fromNickname = message.getString("fromName");
+            String content = message.getString("content");
+
+            messageList.add(new Message(id, fromUserId, fromNickname, chatId, content));
+        }
+        return messageList;
+    }
+
+    public long getId(String url) {
+        HttpResponse<JsonNode> response = Unirest.get(url).asJson();
+
+        JSONObject objectWithId = response.getBody().getObject();
+
+        return IdConverter.convertIdToLong(objectWithId);
+    }
+
 }

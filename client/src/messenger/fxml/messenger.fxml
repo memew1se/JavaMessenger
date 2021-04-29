@@ -14,7 +14,7 @@
             <TableColumn fx:id="chatTableColumn" prefWidth="215.0" text="Chats" />
          </columns>
       </TableView>
-      <TableView fx:id="messengerTableView" layoutX="216.0" prefHeight="538.0" prefWidth="584.0">
+      <TableView fx:id="messageTableView" layoutX="216.0" prefHeight="538.0" prefWidth="584.0">
         <columns>
           <TableColumn fx:id="userTableColumn" prefWidth="166.0" text="User" />
           <TableColumn fx:id="messageTableColumn" minWidth="0.0" prefWidth="419.0" text="Message" />

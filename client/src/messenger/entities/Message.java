@@ -8,15 +8,15 @@ import javafx.beans.property.StringProperty;
 public class Message {
 
     private LongProperty id;
-    private LongProperty userId;
-    private StringProperty from;
+    private LongProperty fromUserId;
+    private StringProperty fromNickname;
     private LongProperty chatId;
     private StringProperty content;
 
-    public Message(long id, long userId, String from, long chatId, String content) {
+    public Message(long id, long fromUserId, String fromNickname, long chatId, String content) {
         this.id = new SimpleLongProperty(id);
-        this.userId = new SimpleLongProperty(userId);
-        this.from = new SimpleStringProperty(from);
+        this.fromUserId = new SimpleLongProperty(fromUserId);
+        this.fromNickname = new SimpleStringProperty(fromNickname);
         this.chatId = new SimpleLongProperty(chatId);
         this.content = new SimpleStringProperty(content);
     }
@@ -29,16 +29,20 @@ public class Message {
         return id;
     }
 
-    public long getUserId() {
-        return userId.get();
+    public long getFromUserId() {
+        return fromUserId.get();
     }
 
-    public String getFrom() {
-        return from.get();
+    public LongProperty getFromUserIdProperty() {
+        return fromUserId;
     }
 
-    public StringProperty getFromProperty() {
-        return from;
+    public String getFromNickname() {
+        return fromNickname.get();
+    }
+
+    public StringProperty getFromNicknameProperty() {
+        return fromNickname;
     }
 
     public long getChatId() {
@@ -55,5 +59,16 @@ public class Message {
 
     public StringProperty getContentProperty() {
         return content;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", userId=" + fromUserId +
+                ", from=" + fromNickname +
+                ", chatId=" + chatId +
+                ", content=" + content +
+                '}';
     }
 }
