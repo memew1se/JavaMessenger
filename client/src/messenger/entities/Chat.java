@@ -10,7 +10,7 @@ public class Chat {
 
     private LongProperty id;
     private StringProperty name;
-    private ListProperty<Long> users_id;
+    private ListProperty<Long> usersId;
 
     private ListProperty<Message> messages;
 
@@ -19,15 +19,31 @@ public class Chat {
         this.name = new SimpleStringProperty(name);
 
         ObservableList<Long> userList = FXCollections.observableArrayList(users);
-        this.users_id = new SimpleListProperty<Long>(userList);
+        this.usersId = new SimpleListProperty<Long>(userList);
     }
 
     public long getId() {
         return id.get();
     }
 
+    public LongProperty getIdProperty() {
+        return id;
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
     public StringProperty getNameProperty() {
         return name;
+    }
+
+    public List<Long> getUsersId() {
+        return usersId.get();
+    }
+
+    public ListProperty<Long> getUsersIdProperty() {
+        return usersId;
     }
 
     @Override
@@ -35,7 +51,7 @@ public class Chat {
         return "Chat{" +
                 "id=" + id +
                 ", name=" + name +
-                ", users_id=" + users_id +
+                ", users_id=" + usersId +
                 '}';
     }
 }

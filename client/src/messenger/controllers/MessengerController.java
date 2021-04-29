@@ -13,7 +13,7 @@ import messenger.entities.Message;
 import messenger.requests.ClientRequests;
 
 
-public class MessengerController {
+public class MessengerController extends BaseController {
 
     @FXML
     private TableView<Chat> chatTableView;
@@ -39,12 +39,12 @@ public class MessengerController {
     @FXML
     private Button sendMessageButton;
 
-    private App application;
     private ClientRequests messengerRequests;
     private ObservableList<Chat> allChats;
+    private ObservableList<Message> allMessages;
 
     public void configure(App application) {
-        this.application = application;
+        setApplication(application);
         messengerRequests = application.getClientRequests();
 
         chatTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Chat>() {
