@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import kong.unirest.UnirestException;
 import kong.unirest.json.JSONArray;
 
+import kong.unirest.json.JSONObject;
 import messenger.exceptions.NonUniqueNickname;
 import messenger.requests.ClientRequests;
 import messenger.utils.IdConverter;
@@ -45,8 +46,8 @@ public class LoginController extends BaseController {
         password = PasswordAuth.hashPassword(password);
 
         try {
-            ClientRequests cr = new ClientRequests(nick, password);
-            JSONArray jsonUser = cr.signIn();
+            ClientRequests loginRequests = new ClientRequests(nick, password);
+            JSONObject jsonUser = loginRequests.signIn();
 
             if (jsonUser.isEmpty()) {
                 errorLabel.setText("Couldn't find your account");
@@ -54,8 +55,8 @@ public class LoginController extends BaseController {
             }
 
             long user_id = IdConverter.convert(jsonUser);
-            cr.setId(user_id);
-            this.application.setCr(cr);
+            loginRequests.setId(user_id);
+            this.application.setClientRequests(loginRequests);
 
             this.application.Chat();
 
@@ -78,12 +79,12 @@ public class LoginController extends BaseController {
         password = PasswordAuth.hashPassword(password);
 
         try {
-            ClientRequests cr = new ClientRequests(nick, password);
-            JSONArray jsonUser = cr.signUp();
+            ClientRequests loginRequests = new ClientRequests(nick, password);
+            JSONObject jsonUser = loginRequests.signUp();
 
             long user_id = IdConverter.convert(jsonUser);
-            cr.setId(user_id);
-            this.application.setCr(cr);
+            loginRequests.setId(user_id);
+            this.application.setClientRequests(loginRequests);
 
             this.application.Chat();
 

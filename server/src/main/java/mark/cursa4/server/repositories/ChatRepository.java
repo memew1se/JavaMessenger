@@ -12,4 +12,7 @@ public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
 
     @RestResource(path = "idanduser", rel = "idanduser")
     List<ChatEntity> findByIdAndUsers(long id, long user);
+
+    @RestResource(path = "userin", rel = "userin")
+    List<ChatEntity> findByUsers(long id);
 }

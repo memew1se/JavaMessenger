@@ -1,11 +1,11 @@
 package messenger.utils;
 
-import kong.unirest.json.JSONArray;
+import kong.unirest.json.JSONObject;
 
 public class IdConverter {
 
-    public static long convert(JSONArray jsonUser) {
-        String link = jsonUser.getJSONObject(0).getJSONObject("_links").getJSONObject("self")
+    public static long convert(JSONObject jsonObj) {
+        String link = jsonObj.getJSONObject("_links").getJSONObject("self")
                 .getString("href");
 
         Character id_char = link.charAt(link.length() - 1);

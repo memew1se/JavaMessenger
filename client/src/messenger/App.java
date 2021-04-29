@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import messenger.controllers.LoginController;
+import messenger.controllers.MessengerController;
 import messenger.requests.ClientRequests;
 
 import java.io.IOException;
@@ -48,12 +49,19 @@ public class App extends Application {
             loader.setLocation(App.class.getResource("fxml/messenger.fxml"));
             Parent messengerForm = loader.load();
             primaryStage.setScene(new Scene(messengerForm));
+
+            MessengerController mc = loader.getController();
+            mc.settings(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void setCr(ClientRequests cr) {
+    public void setClientRequests(ClientRequests cr) {
         this.cr = cr;
+    }
+
+    public ClientRequests getClientRequests() {
+        return cr;
     }
 }
