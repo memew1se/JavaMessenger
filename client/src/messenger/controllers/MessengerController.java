@@ -79,8 +79,25 @@ public class MessengerController extends BaseController {
         allMessages.addAll(application.getClientRequests().getMessages(currentChat));
     }
 
+    @FXML
+    public void sendMessageButtonHandler() {
+        String message = contentTextField.getText();
+
+        if (message.isEmpty() | getCurrentChat() == 0) {
+            contentTextField.setText("");
+            return;
+        }
+
+        application.getClientRequests().sendMessage(getCurrentChat(), message);
+        contentTextField.setText("");
+    }
+
     public void setCurrentChat(long currentChat) {
         this.currentChat = currentChat;
+    }
+
+    public long getCurrentChat() {
+        return currentChat;
     }
 
 }

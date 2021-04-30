@@ -15,7 +15,11 @@ public class IdConverter {
     }
 
     public static String convertChatIdToHref(long id) {
-        return "http://127.0.0.1:8080/messageEntities/" + id;
+        return System.getenv("BASE_URL") + "/messageEntities/" + id;
+    }
+
+    public static String convertUserIdToHref(long id) {
+        return System.getenv("BASE_URL") + "/userEntities/" + id;
     }
 
 }

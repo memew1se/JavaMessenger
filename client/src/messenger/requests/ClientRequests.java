@@ -103,7 +103,7 @@ public class ClientRequests {
             JSONObject message = messages.getJSONObject(i);
 
             long id = IdConverter.convertIdToLong(message);
-            long fromUserId = getId(message.getJSONObject("_links").getJSONObject("fromId").getString("href"));
+            long fromUserId = getIdFromUrl(message.getJSONObject("_links").getJSONObject("fromId").getString("href"));
             String fromNickname = message.getString("fromName");
             String content = message.getString("content");
 
@@ -112,12 +112,27 @@ public class ClientRequests {
         return messageList;
     }
 
-    public long getId(String url) {
+    public long getIdFromUrl(String url) {
         HttpResponse<JsonNode> response = Unirest.get(url).asJson();
 
         JSONObject objectWithId = response.getBody().getObject();
 
         return IdConverter.convertIdToLong(objectWithId);
+    }
+
+    public void sendMessage(long chatId, String message) {
+        JSONObject body = new JSONObject();
+
+        body.put("chat", IdConverter.convertChatIdToHref(chatId));
+        body.put("fromName", nickname);
+        body.put("fromId", IdConverter.convertUserIdToHref(id));
+        body.put("content", message);
+
+        HttpResponse<JsonNode> response = unirest.post("/messageEntities")
+                .header("accept", "application/json")
+                .header("Content-Type", "application/json")
+                .body(body)
+                .asJson();
     }
 
 }
