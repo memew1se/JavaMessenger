@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @RestResource(path = "nickpass", rel = "nickpass")
     List<UserEntity> findByNicknameAndPassword(String nickname, String password);
+
+    @RestResource(path = "nickname", rel = "nickname")
+    List<UserEntity> findByNickname(String nickname);
 }

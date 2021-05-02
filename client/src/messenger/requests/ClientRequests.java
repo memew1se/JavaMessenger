@@ -135,4 +135,14 @@ public class ClientRequests {
                 .asJson();
     }
 
+    public void createChat(String nick) {
+        HttpResponse<JsonNode> response = unirest.get("/userEntities/search/nickname")
+                .queryString("nickname", nick)
+                .asJson();
+
+        JSONArray jsonUser = response.getBody().getObject()
+                .getJSONObject("_embedded").getJSONArray("userEntities");
+
+    }
+
 }

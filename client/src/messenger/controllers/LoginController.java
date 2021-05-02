@@ -57,7 +57,7 @@ public class LoginController extends BaseController {
             loginRequests.setId(user_id);
             this.application.setClientRequests(loginRequests);
 
-            this.application.Chat();
+            this.application.Messenger();
 
         } catch (UnirestException ue) {
             errorLabel.setText("Server is not responding! Please try later or check your internet connection");
@@ -85,7 +85,7 @@ public class LoginController extends BaseController {
             loginRequests.setId(user_id);
             this.application.setClientRequests(loginRequests);
 
-            this.application.Chat();
+            this.application.Messenger();
 
         } catch (UnirestException ue) {
             errorLabel.setText("Server is not responding! Please try later or check your internet connection");

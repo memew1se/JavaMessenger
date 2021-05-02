@@ -92,6 +92,11 @@ public class MessengerController extends BaseController {
         contentTextField.setText("");
     }
 
+    @FXML
+    public void createChatButtonHandler() {
+        application.newChat();
+    }
+
     public void setCurrentChat(long currentChat) {
         this.currentChat = currentChat;
     }
