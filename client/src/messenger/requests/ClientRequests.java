@@ -11,9 +11,12 @@ import kong.unirest.json.JSONObject;
 
 import messenger.entities.Chat;
 import messenger.entities.Message;
-import messenger.exceptions.NonUniqueNickname;
+import messenger.exceptions.ChatAlreadyExistsException;
+import messenger.exceptions.NoSuchUserException;
+import messenger.exceptions.NonUniqueNicknameException;
 import messenger.utils.IdConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRequests {
@@ -42,11 +45,12 @@ public class ClientRequests {
                 .queryString("password", password)
                 .asJson();
 
-        JSONObject user = response.getBody().getObject().getJSONObject("_embedded").getJSONArray("userEntities").getJSONObject(0);
+        JSONObject user = response.getBody().getObject()
+                .getJSONObject("_embedded").getJSONArray("userEntities").getJSONObject(0);
         return user;
     }
 
-    public JSONObject signUp() throws UnirestException, NonUniqueNickname {
+    public JSONObject signUp() throws UnirestException, NonUniqueNicknameException {
         JSONObject body = new JSONObject();
 
         body.put("nickname", nickname);
@@ -59,7 +63,7 @@ public class ClientRequests {
                 .asJson();
 
         if (response.getStatus() == 409) {
-            throw new NonUniqueNickname(String.format("Nickname %s is already used", nickname));
+            throw new NonUniqueNicknameException(String.format("Nickname %s is already used", nickname));
         }
 
         return signIn();
@@ -78,7 +82,7 @@ public class ClientRequests {
         for(int i = 0; i < chats.length(); i++) {
             JSONObject chat = chats.getJSONObject(i);
 
-            long id = IdConverter.convertIdToLong(chat);
+            long id = IdConverter.convertHrefIdToLong(chat);
             String name = chat.getString("name");
             List<Long> users_id = chat.getJSONArray("users").toList();
 
@@ -102,7 +106,7 @@ public class ClientRequests {
         for(int i = 0; i < messages.length(); i++) {
             JSONObject message = messages.getJSONObject(i);
 
-            long id = IdConverter.convertIdToLong(message);
+            long id = IdConverter.convertHrefIdToLong(message);
             long fromUserId = getIdFromUrl(message.getJSONObject("_links").getJSONObject("fromId").getString("href"));
             String fromNickname = message.getString("fromName");
             String content = message.getString("content");
@@ -117,7 +121,7 @@ public class ClientRequests {
 
         JSONObject objectWithId = response.getBody().getObject();
 
-        return IdConverter.convertIdToLong(objectWithId);
+        return IdConverter.convertHrefIdToLong(objectWithId);
     }
 
     public void sendMessage(long chatId, String message) {
@@ -135,13 +139,57 @@ public class ClientRequests {
                 .asJson();
     }
 
-    public void createChat(String nick) {
-        HttpResponse<JsonNode> response = unirest.get("/userEntities/search/nickname")
+    public void createChat(String nick, String chatName) throws NoSuchUserException, ChatAlreadyExistsException {
+        HttpResponse<JsonNode> userResponse = unirest.get("/userEntities/search/nickname")
                 .queryString("nickname", nick)
                 .asJson();
 
-        JSONArray jsonUser = response.getBody().getObject()
-                .getJSONObject("_embedded").getJSONArray("userEntities");
+        JSONObject jsonUser = userResponse.getBody().getObject()
+                .getJSONObject("_embedded").getJSONArray("userEntities").getJSONObject(0);
+
+        if (jsonUser.isEmpty()) {
+            throw new NoSuchUserException("User not found");
+        }
+
+        long userId = IdConverter.convertHrefIdToLong(jsonUser);
+        String userName = jsonUser.getString("nickname");
+
+        HttpResponse<JsonNode> chatsResponse = unirest.get("/chatEntities/search/userin")
+                .queryString("id", userId)
+                .asJson();
+
+        JSONArray chats = chatsResponse.getBody().getObject()
+                .getJSONObject("_embedded").getJSONArray("chatEntities");
+
+        for(int i = 0; i < chats.length(); i++) {
+            JSONObject chat = chats.getJSONObject(i);
+
+            List<Integer> usersInChatInteger = chat.getJSONArray("users").toList();
+
+            List<Long> usersInChat = new ArrayList<Long>(usersInChatInteger.size());
+            for (int j = 0; j < usersInChatInteger.size(); j ++) {
+                usersInChat.add(usersInChatInteger.get(j).longValue());
+            }
+
+            if(usersInChat.contains(id) && usersInChat.contains(userId)) {
+                throw new ChatAlreadyExistsException("You already have chat with this person!");
+            }
+        }
+
+        JSONObject body = new JSONObject();
+
+        List<Long> usersList = new ArrayList<Long>();
+        usersList.add(id);
+        usersList.add(userId);
+
+        body.put("name", chatName);
+        body.put("users", usersList);
+
+        HttpResponse<JsonNode> createChatResponse = unirest.post("/chatEntities/")
+                .header("accept", "application/json")
+                .header("Content-Type", "application/json")
+                .body(body)
+                .asJson();
 
     }
 

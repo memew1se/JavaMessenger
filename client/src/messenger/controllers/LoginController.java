@@ -9,7 +9,7 @@ import javafx.scene.control.PasswordField;
 import kong.unirest.UnirestException;
 
 import kong.unirest.json.JSONObject;
-import messenger.exceptions.NonUniqueNickname;
+import messenger.exceptions.NonUniqueNicknameException;
 import messenger.requests.ClientRequests;
 import messenger.utils.IdConverter;
 import messenger.utils.PasswordHasher;
@@ -53,7 +53,7 @@ public class LoginController extends BaseController {
                 return;
             }
 
-            long user_id = IdConverter.convertIdToLong(jsonUser);
+            long user_id = IdConverter.convertHrefIdToLong(jsonUser);
             loginRequests.setId(user_id);
             this.application.setClientRequests(loginRequests);
 
@@ -66,7 +66,7 @@ public class LoginController extends BaseController {
     }
 
     @FXML
-    public void signUpButtonHandler() throws UnirestException, NonUniqueNickname {
+    public void signUpButtonHandler() throws UnirestException, NonUniqueNicknameException {
         String nick = nickTextField.getText();
         String password = passTextField.getText();
 
@@ -81,7 +81,7 @@ public class LoginController extends BaseController {
             ClientRequests loginRequests = new ClientRequests(nick, password);
             JSONObject jsonUser = loginRequests.signUp();
 
-            long user_id = IdConverter.convertIdToLong(jsonUser);
+            long user_id = IdConverter.convertHrefIdToLong(jsonUser);
             loginRequests.setId(user_id);
             this.application.setClientRequests(loginRequests);
 
@@ -90,7 +90,7 @@ public class LoginController extends BaseController {
         } catch (UnirestException ue) {
             errorLabel.setText("Server is not responding! Please try later or check your internet connection");
             return;
-        } catch (NonUniqueNickname nn) {
+        } catch (NonUniqueNicknameException nn) {
             errorLabel.setText(nn.getMessage());
         }
     }

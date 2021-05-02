@@ -4,7 +4,7 @@ import kong.unirest.json.JSONObject;
 
 public class IdConverter {
 
-    public static long convertIdToLong(JSONObject jsonObj) {
+    public static long convertHrefIdToLong(JSONObject jsonObj) {
         String link = jsonObj.getJSONObject("_links").getJSONObject("self")
                 .getString("href");
 
