@@ -8,9 +8,9 @@ import javax.crypto.spec.PBEKeySpec;
 
 public class PasswordHasher {
 
-    private static final byte[] SALT = System.getenv("MESSENGER_SALT").getBytes();
-    private static final int ITERATIONS = 20_000;
-    private static final int PREFERABLE_PASSWORD_LEN = 256;
+    private static final byte[] SALT = System.getenv("PASSWORD_SALT").getBytes();
+    private static final int ITERATIONS = Integer.parseInt(System.getenv("PASSWORD_ITERATIONS"));
+    private static final int PREFERABLE_PASSWORD_LEN = Integer.parseInt(System.getenv("PASSWORD_LEN"));
 
     public static String hashPassword(String password) {
         try {
