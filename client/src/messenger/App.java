@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import messenger.controllers.LoginController;
 import messenger.controllers.MessengerController;
 import messenger.controllers.NewChatController;

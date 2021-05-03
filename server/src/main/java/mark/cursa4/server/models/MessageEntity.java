@@ -7,8 +7,6 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
-import java.sql.Timestamp;
-
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data

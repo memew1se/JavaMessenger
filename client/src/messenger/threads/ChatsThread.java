@@ -1,17 +1,14 @@
 package messenger.threads;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import messenger.App;
 import messenger.controllers.MessengerController;
-import messenger.entities.Chat;
 import messenger.requests.ClientRequests;
 
 public class ChatsThread extends Thread{
 
-    private ClientRequests clientRequests;
-    private App application;
     private MessengerController messengerController;
+    private App application;
+    private ClientRequests clientRequests;
 
     public ChatsThread(MessengerController messengerController) {
         this.messengerController = messengerController;

@@ -7,9 +7,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
 import kong.unirest.UnirestException;
-
 import kong.unirest.json.JSONException;
 import kong.unirest.json.JSONObject;
+
 import messenger.exceptions.NonUniqueNicknameException;
 import messenger.requests.ClientRequests;
 import messenger.utils.IdConverter;

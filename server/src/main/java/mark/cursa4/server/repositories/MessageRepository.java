@@ -2,6 +2,7 @@ package mark.cursa4.server.repositories;
 
 import mark.cursa4.server.models.ChatEntity;
 import mark.cursa4.server.models.MessageEntity;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
 

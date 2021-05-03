@@ -6,9 +6,9 @@ import messenger.requests.ClientRequests;
 
 public class MessagesThread extends Thread{
 
-    private ClientRequests clientRequests;
-    private App application;
     private MessengerController messengerController;
+    private App application;
+    private ClientRequests clientRequests;
 
     public MessagesThread(MessengerController messengerController) {
         this.messengerController = messengerController;

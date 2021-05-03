@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import messenger.exceptions.ChatAlreadyExistsException;
 import messenger.exceptions.NoSuchUserException;
 import messenger.requests.ClientRequests;
