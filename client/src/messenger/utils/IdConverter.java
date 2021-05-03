@@ -8,8 +8,8 @@ public class IdConverter {
         String link = jsonObj.getJSONObject("_links").getJSONObject("self")
                 .getString("href");
 
-        Character id_char = link.charAt(link.length() - 1);
-        long id = Character.getNumericValue(id_char);
+        String[] linkArray = link.split("/");
+        long id = Long.parseLong(linkArray[linkArray.length - 1]);
 
         return id;
     }
