@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     /**
      * Find user by nickname and password
-     *
+     * 
      * @param nickname the nickname of user
      * @param password the password of user
      * @return the list of one user with given nickname and password if it exists
@@ -33,7 +33,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     /**
      * Find user by nickname
-     *
+     * 
      * @param nickname the nickname of user
      * @return the list of one user with given nickname if it exists
      */

@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.util.Calendar;
 
 /**
- * Super entity of all classes
+ * Super entity of all other entities
  */
 @MappedSuperclass
 @Data
