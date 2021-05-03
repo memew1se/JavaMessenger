@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 
 import kong.unirest.UnirestException;
 
+import kong.unirest.json.JSONException;
 import kong.unirest.json.JSONObject;
 import messenger.exceptions.NonUniqueNicknameException;
 import messenger.requests.ClientRequests;
@@ -48,11 +49,6 @@ public class LoginController extends BaseController {
             ClientRequests loginRequests = new ClientRequests(nick, password);
             JSONObject jsonUser = loginRequests.signIn();
 
-            if (jsonUser.isEmpty()) {
-                errorLabel.setText("Couldn't find your account");
-                return;
-            }
-
             long user_id = IdConverter.convertHrefIdToLong(jsonUser);
             loginRequests.setId(user_id);
             this.application.setClientRequests(loginRequests);
@@ -62,6 +58,8 @@ public class LoginController extends BaseController {
         } catch (UnirestException ue) {
             errorLabel.setText("Server is not responding! Please try later or check your internet connection");
             return;
+        } catch (JSONException je) {
+            errorLabel.setText("Couldn't find your account");
         }
     }
 

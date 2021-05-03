@@ -7,6 +7,7 @@ import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
 import kong.unirest.json.JSONArray;
+import kong.unirest.json.JSONException;
 import kong.unirest.json.JSONObject;
 
 import messenger.entities.Chat;
@@ -39,7 +40,7 @@ public class ClientRequests {
         this.id = id;
     }
 
-    public JSONObject signIn() throws UnirestException {
+    public JSONObject signIn() throws UnirestException, JSONException {
         HttpResponse<JsonNode> response = unirest.get("/userEntities/search/nickpass")
                 .queryString("nickname", nickname)
                 .queryString("password", password)
