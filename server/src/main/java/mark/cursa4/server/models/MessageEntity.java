@@ -7,6 +7,9 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+/**
+ * Entity of message
+ */
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data

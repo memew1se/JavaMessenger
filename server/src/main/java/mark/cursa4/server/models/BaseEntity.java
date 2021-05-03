@@ -11,6 +11,9 @@ import javax.persistence.*;
 
 import java.util.Calendar;
 
+/**
+ * Super entity of all classes
+ */
 @MappedSuperclass
 @Data
 @NoArgsConstructor

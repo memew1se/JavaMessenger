@@ -7,6 +7,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+/**
+ * Entity of user
+ */
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
