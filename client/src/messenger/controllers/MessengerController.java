@@ -11,6 +11,8 @@ import messenger.App;
 import messenger.entities.Chat;
 import messenger.entities.Message;
 import messenger.requests.ClientRequests;
+import messenger.threads.ChatsThread;
+import messenger.threads.MessagesThread;
 
 
 public class MessengerController extends BaseController {
@@ -43,6 +45,8 @@ public class MessengerController extends BaseController {
     private ObservableList<Chat> allChats;
     private ObservableList<Message> allMessages;
     private long currentChat;
+    private Thread chatsThread;
+    private Thread messagesThread;
 
     public void configure(App application) {
         setApplication(application);
@@ -53,7 +57,7 @@ public class MessengerController extends BaseController {
             public void changed(ObservableValue<? extends Chat> observable, Chat oldValue, Chat newValue) {
                 if(chatTableView.getSelectionModel().getSelectedItem() != null) {
                     setCurrentChat(newValue.getId());
-                    showMessages();
+                    startMessagesThread();
                 }
             }
         });
@@ -61,9 +65,6 @@ public class MessengerController extends BaseController {
         allMessages = FXCollections.observableArrayList();
 
         allChats = FXCollections.observableArrayList();
-        allChats = messengerRequests.getChats();
-
-        chatTableView.setItems(allChats);
 
         messageTableView.setItems(allMessages);
 
@@ -71,12 +72,35 @@ public class MessengerController extends BaseController {
 
         userTableColumn.setCellValueFactory(cell -> cell.getValue().getFromNicknameProperty());
         messageTableColumn.setCellValueFactory(cell -> cell.getValue().getContentProperty());
+
+        chatsThread = new ChatsThread(this);
+        chatsThread.start();
+
+    }
+
+    public void showChats() {
+        ObservableList<Chat> chats = messengerRequests.getChats();
+        allChats.clear();
+        allChats = chats;
+        chatTableView.setItems(allChats);
     }
 
     public void showMessages() {
-
+        ObservableList<Message> messages = messengerRequests.getMessages(currentChat);
         allMessages.clear();
-        allMessages.addAll(application.getClientRequests().getMessages(currentChat));
+        allMessages = messages;
+        messageTableView.setItems(allMessages);
+    }
+
+    public void startMessagesThread() {
+        try {
+            messagesThread.interrupt();
+            messagesThread = new MessagesThread(this);
+            messagesThread.start();
+        } catch (NullPointerException pointerException) {
+            messagesThread = new MessagesThread(this);
+            messagesThread.start();
+        }
     }
 
     @FXML

@@ -10,4 +10,8 @@ public class BaseController {
         this.application = application;
     }
 
+    public App getApplication() {
+        return application;
+    }
+
 }
