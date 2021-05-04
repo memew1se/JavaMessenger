@@ -246,6 +246,10 @@ public class ClientRequests {
 
     }
 
+    public void deleteChat(String nickname) {
+        return;
+    }
+
     /**
      * Sets user id
      *

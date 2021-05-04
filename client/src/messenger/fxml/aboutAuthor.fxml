@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <Label layoutX="194.0" layoutY="169.0" prefHeight="16.0" prefWidth="158.0" text="Author: Mark Likhachev" />
+      <Label layoutX="194.0" layoutY="208.0" prefHeight="16.0" prefWidth="245.0" text="Email: m4rk.l1kh4ch3v@gmail.com" />
+   </children>
+</AnchorPane>

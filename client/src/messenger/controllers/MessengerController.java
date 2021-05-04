@@ -44,6 +44,9 @@ public class MessengerController extends BaseController {
     @FXML
     private Button sendMessageButton;
 
+    @FXML
+    private Button deleteChatButtonHandler;
+
     private ClientRequests messengerRequests;
     private ObservableList<Chat> allChats;
     private ObservableList<Message> allMessages;
@@ -149,6 +152,11 @@ public class MessengerController extends BaseController {
     @FXML
     public void createChatButtonHandler() {
         application.newChat();
+    }
+
+    @FXML
+    public void deleteChatButtonHandler() {
+        return;
     }
 
 

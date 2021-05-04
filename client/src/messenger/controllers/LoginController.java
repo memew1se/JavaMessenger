@@ -36,6 +36,9 @@ public class LoginController extends BaseController {
     @FXML
     private Button signUpButton;
 
+    @FXML
+    private Button aboutAuthorButton;
+
     /**
      * Handler for signInButton
      *
@@ -134,6 +137,10 @@ public class LoginController extends BaseController {
             errorLabel.setText(nn.getMessage());
             return;
         }
+    }
+
+    public void aboutAuthorButtonHandler() {
+        return;
     }
 
 }
