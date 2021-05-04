@@ -14,11 +14,20 @@ import messenger.requests.ClientRequests;
 
 import java.io.IOException;
 
+/**
+ *  JavaFX messenger application
+ */
 public class App extends Application {
 
     private Stage primaryStage;
-    private ClientRequests cr;
+    private ClientRequests clientRequests;
 
+    /**
+     * The entry point of program
+     *
+     * @param primaryStage the primary stage for the application
+     * @throws Exception - if something goes wrong
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
@@ -26,10 +35,18 @@ public class App extends Application {
         UserLogin();
     }
 
+    /**
+     * Start of the program
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Login page
+     */
     public void UserLogin() {
         try {
             primaryStage.setTitle("Auth");
@@ -45,6 +62,9 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Messenger page
+     */
     public void Messenger() {
         try {
             primaryStage.setTitle("JavaMessenger");
@@ -60,6 +80,9 @@ public class App extends Application {
         }
     }
 
+    /**
+     * New chat page
+     */
     public void newChat() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -83,11 +106,21 @@ public class App extends Application {
         }
     }
 
-    public void setClientRequests(ClientRequests cr) {
-        this.cr = cr;
+    /**
+     * Sets clientRequests
+     *
+     * @param clientRequests the clientRequests
+     */
+    public void setClientRequests(ClientRequests clientRequests) {
+        this.clientRequests = clientRequests;
     }
 
+    /**
+     * Gets clientRequests
+     *
+     * @return the clientRequests
+     */
     public ClientRequests getClientRequests() {
-        return cr;
+        return clientRequests;
     }
 }

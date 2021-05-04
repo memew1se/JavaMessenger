@@ -21,6 +21,9 @@ import messenger.utils.IdConverter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * API and session for the user
+ */
 public class ClientRequests {
 
     private static final Unirest unirest = new Unirest();
@@ -30,17 +33,27 @@ public class ClientRequests {
     private String password;
     private long id;
 
+    /**
+     * ClientRequests constructor
+     *
+     * @param nickname
+     * @param password
+     */
     public ClientRequests(String nickname, String password) {
         this.nickname = nickname;
         this.password = password;
 
+        // Setting server url for the session
         unirest.config().defaultBaseUrl(System.getenv("BASE_URL"));
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    /**
+     * User authorization
+     *
+     * @return user info in JSON
+     * @throws UnirestException - if there are connection problems
+     * @throws JSONException - if user not exist
+     */
     public JSONObject signIn() throws UnirestException, JSONException {
         HttpResponse<JsonNode> response = unirest.get("/userEntities/search/nickpass")
                 .queryString("nickname", nickname)
@@ -52,6 +65,13 @@ public class ClientRequests {
         return user;
     }
 
+    /**
+     * User registration
+     *
+     * @return user info in JSON
+     * @throws UnirestException - if there are connection problems
+     * @throws NonUniqueNicknameException - if user nickname already taken
+     */
     public JSONObject signUp() throws UnirestException, NonUniqueNicknameException {
         JSONObject body = new JSONObject();
 
@@ -71,6 +91,11 @@ public class ClientRequests {
         return signIn();
     }
 
+    /**
+     * Gets user chats from server
+     *
+     * @return list of chats
+     */
     public ObservableList<Chat> getChats() {
         HttpResponse<JsonNode> response = unirest.get("/chatEntities/search/userin")
                 .queryString("id", id)
@@ -91,10 +116,16 @@ public class ClientRequests {
             Chat chatEntity = new Chat(id, name, users_id);
             chatList.add(chatEntity);
         }
-        
+
         return chatList;
     }
 
+    /**
+     * Gets users messages from chat
+     *
+     * @param chatId the chat id
+     * @return list of messages
+     */
     public ObservableList<Message> getMessages(long chatId) {
         HttpResponse<JsonNode> response = unirest.get("/messageEntities/search/chatid")
                 .queryString("id", IdConverter.convertChatIdToHref(chatId))
@@ -118,6 +149,12 @@ public class ClientRequests {
         return messageList;
     }
 
+    /**
+     * Gets id from link
+     *
+     * @param url the url of object
+     * @return the object id
+     */
     public long getIdFromUrl(String url) {
         HttpResponse<JsonNode> response = Unirest.get(url).asJson();
 
@@ -126,6 +163,12 @@ public class ClientRequests {
         return IdConverter.convertHrefIdToLong(objectWithId);
     }
 
+    /**
+     * Sends user message
+     *
+     * @param chatId the chat id
+     * @param message the text of message
+     */
     public void sendMessage(long chatId, String message) {
         JSONObject body = new JSONObject();
 
@@ -141,6 +184,14 @@ public class ClientRequests {
                 .asJson();
     }
 
+    /**
+     * Creates new chat
+     *
+     * @param nick the user nickname
+     * @param chatName the chat name
+     * @throws NoSuchUserException - if there is no user
+     * @throws ChatAlreadyExistsException - if chat already exists
+     */
     public void createChat(String nick, String chatName) throws NoSuchUserException, ChatAlreadyExistsException {
         HttpResponse<JsonNode> userResponse = unirest.get("/userEntities/search/nickname")
                 .queryString("nickname", nick)
@@ -195,4 +246,12 @@ public class ClientRequests {
 
     }
 
+    /**
+     * Sets user id
+     *
+     * @param id the user id
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
 }

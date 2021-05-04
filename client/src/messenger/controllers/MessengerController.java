@@ -15,6 +15,9 @@ import messenger.threads.ChatsThread;
 import messenger.threads.MessagesThread;
 
 
+/**
+ * Controller for the main app
+ */
 public class MessengerController extends BaseController {
 
     @FXML
@@ -48,36 +51,50 @@ public class MessengerController extends BaseController {
     private Thread chatsThread;
     private Thread messagesThread;
 
+    /**
+     * Configuration of controller
+     *
+     * @param application the App
+     */
     public void configure(App application) {
+
+        // Setting application and user session
         setApplication(application);
         messengerRequests = application.getClientRequests();
 
+        // Setting chat loading on chatTableView click
         chatTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Chat>() {
             @Override
             public void changed(ObservableValue<? extends Chat> observable, Chat oldValue, Chat newValue) {
                 if(chatTableView.getSelectionModel().getSelectedItem() != null) {
+
+                    // Getting messages
                     setCurrentChat(newValue.getId());
                     startMessagesThread();
                 }
             }
         });
 
+        // Creating ArrayLists for chats and messages
         allMessages = FXCollections.observableArrayList();
-
         allChats = FXCollections.observableArrayList();
 
-        messageTableView.setItems(allMessages);
-
+        // Setting view for chatTableView
         chatTableColumn.setCellValueFactory(cell -> cell.getValue().getNameProperty());
 
+        // Setting view for userTableView
         userTableColumn.setCellValueFactory(cell -> cell.getValue().getFromNicknameProperty());
         messageTableColumn.setCellValueFactory(cell -> cell.getValue().getContentProperty());
 
+        // Getting chats
         chatsThread = new ChatsThread(this);
         chatsThread.start();
 
     }
 
+    /**
+     * Chats loader
+     */
     public void showChats() {
         ObservableList<Chat> chats = messengerRequests.getChats();
         allChats.clear();
@@ -85,6 +102,9 @@ public class MessengerController extends BaseController {
         chatTableView.setItems(allChats);
     }
 
+    /**
+     * Messages loader
+     */
     public void showMessages() {
         ObservableList<Message> messages = messengerRequests.getMessages(currentChat);
         allMessages.clear();
@@ -92,6 +112,9 @@ public class MessengerController extends BaseController {
         messageTableView.setItems(allMessages);
     }
 
+    /**
+     * Starting new thread to load messages
+     */
     public void startMessagesThread() {
         try {
             messagesThread.interrupt();
@@ -103,10 +126,14 @@ public class MessengerController extends BaseController {
         }
     }
 
+    /**
+     * Handler fo sendMessageButton
+     */
     @FXML
     public void sendMessageButtonHandler() {
         String message = contentTextField.getText();
 
+        // Empty user input alert
         if (message.isEmpty() | getCurrentChat() == 0) {
             contentTextField.setText("");
             return;
@@ -116,15 +143,29 @@ public class MessengerController extends BaseController {
         contentTextField.setText("");
     }
 
+    /**
+     * Handler for createChatButton
+     */
     @FXML
     public void createChatButtonHandler() {
         application.newChat();
     }
 
+
+    /**
+     * Sets current chat
+     *
+     * @param currentChat the chat id
+     */
     public void setCurrentChat(long currentChat) {
         this.currentChat = currentChat;
     }
 
+    /**
+     * Gets current chat
+     *
+     * @return the chat id
+     */
     public long getCurrentChat() {
         return currentChat;
     }
